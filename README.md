@@ -1,3 +1,4 @@
+# PanZoomYouTube
 
 Sometimes you want to zoom in on a YouTube video, or only view a part of the video screen.
 
