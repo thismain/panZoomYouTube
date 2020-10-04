@@ -64,7 +64,7 @@ el('panzoom').style.cursor='hand';
 
 delta = Math.max(-1, Math.min(1, (event.wheelDelta || -event.detail)));
 
-if(delta>0){zoom=1.2;}else if(delta<0){zoom=.8;}
+if(delta>0){zoom=1.1;}else if(delta<0){zoom=.9;}
 
 
 var mousex=parseFloat(event.clientX);
@@ -106,6 +106,8 @@ if(elc("video-stream html5-main-video")!==null
 &&elc('style-scope ytd-player')[0]!==null
 &&elc('style-scope ytd-player')[0]!=="undefined"
 ){
+
+
 elc('html5-video-container')[0].parentElement.style.backgroundColor='#ffffff';
 yplayer=elc("video-stream html5-main-video")[0];
 yplayer.style.position='absolute';
@@ -117,7 +119,6 @@ if(el('panzoom')==null
 ||el('panzoom')=="undefined"){
 divPanZoom=document.createElement("div");
 elc('style-scope ytd-player')[0].appendChild(divPanZoom);
-//elc('style-scope ytd-player')[0].style.backgroundColor='#ffffff';
 divPanZoom.setAttribute("id", "panzoom");
 divPanZoom.setAttribute("panzooming",false);
 el('panzoom').onmousedown=function(){mousedowner(event);}
@@ -125,8 +126,9 @@ el('panzoom').onmousemove=function(){mousemover(event);}
 el('panzoom').onmouseup=function(){mouseupper(event);}
 el('panzoom').onmousewheel=function(){mousewheeler(event);}
 divPanZoom.style.position='absolute';
-divPanZoom.style.opacity='.1';
-divPanZoom.style.backgroundColor='#ffff00';
+//to show the overlay for testing:
+//divPanZoom.style.opacity='.3';
+//divPanZoom.style.backgroundColor='#ffff00';
 
 }//end if panzoom was undefined
 
@@ -188,7 +190,12 @@ el('panzoom').style.width=screen.width+'px';
 el('panzoom').style.height=screen.height+'px';
 resetZoomDefault();
 
+/*
+from the excellent hyde chrome extension, which you can get here:
+https://chrome.google.com/webstore/detail/hyde-%E2%80%94-hide-the-youtube-v/pmkpddhfbiojipiehnejbjkgdgdpkdpb?hl=en
+and here is the website: https://hydecontrols.com
 // hide the elements that are on the YouTube video player using CSS
+*/
 elc('ytp-chrome-top')[0].style.visibility = 'hidden';
 elc('ytp-chrome-controls')[0].style.visibility = 'hidden';
 elc('ytp-gradient-top')[0].style.visibility = 'hidden';
@@ -215,7 +222,12 @@ yplayer.style.top=window.getComputedStyle(el("player-container")).top;
 yplayer.style.width=window.getComputedStyle(el("player-container")).width;
 yplayer.style.height=window.getComputedStyle(el("player-container")).height
 
+/*
+from the excellent hyde chrome extension, which you can get here:
+https://chrome.google.com/webstore/detail/hyde-%E2%80%94-hide-the-youtube-v/pmkpddhfbiojipiehnejbjkgdgdpkdpb?hl=en
+and here is the website: https://hydecontrols.com
 // show the elements that are on the YouTube video player using CSS
+*/
 elc('ytp-chrome-top')[0].style.visibility = 'visible';
 elc('ytp-chrome-controls')[0].style.visibility = 'visible';
 elc('ytp-gradient-top')[0].style.visibility = 'visible';

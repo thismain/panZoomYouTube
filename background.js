@@ -16,6 +16,27 @@ chrome.tabs.executeScript({file: 'panzoomer.js'});
 );//end add listener
 
 
+chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
+  if (changeInfo.status == 'complete') {
+
+chrome.tabs.query({'active': true, 'windowId': chrome.windows.WINDOW_ID_CURRENT},
+function(tabs){
+if(tabs[0].url.includes("youtube.com/watch?v")){
+//alert(tabs[0].url);
+chrome.tabs.executeScript({file: 'togControlAdder.js'});
+}
+   }
+);
+
+  }
+});
+
+
+
+
+
+
+
 
 
 chrome.runtime.onMessage.addListener(
