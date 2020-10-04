@@ -12,7 +12,6 @@ var h=w*(screen.height/screen.width);
 var zoomW=w,zoomH=h, oldZoomW=zoomW,oldZoomH=zoomH;
 var lefter=0, topper=0, zoomLeft=0, zoomTop=0;
 var yplayer=elc("video-stream html5-main-video")[0];
-var togControl, togText, onoff;
 
 
 function mousedowner(event){
@@ -100,12 +99,33 @@ el('panzoom').style.top=zoomTop+topper +'px';
 }//end mousewheeler
 
 
+function hydeHide(){
+elc('ytp-chrome-top')[0].style.visibility = 'hidden';
+elc('ytp-chrome-controls')[0].style.visibility = 'hidden';
+elc('ytp-gradient-top')[0].style.visibility = 'hidden';
+elc('ytp-gradient-bottom')[0].style.visibility = 'hidden';
+elc('ytp-progress-bar')[0].style.visibility = 'hidden';
+elc('ytp-progress-bar-container')[0].style.visibility = 'hidden';
+}//end hyde hide
+
+function hydeShow(){
+elc('ytp-chrome-top')[0].style.visibility = 'visible';
+elc('ytp-chrome-controls')[0].style.visibility = 'visible';
+elc('ytp-gradient-top')[0].style.visibility = 'visible';
+elc('ytp-gradient-bottom')[0].style.visibility = 'visible';
+elc('ytp-progress-bar')[0].style.visibility = 'visible';
+elc('ytp-progress-bar-container')[0].style.visibility = 'visible';
+}//end hyde show
+
+
+
 
 if(elc("video-stream html5-main-video")!==null
 &&elc("video-stream html5-main-video")!=="undefined"
 &&elc('style-scope ytd-player')[0]!==null
 &&elc('style-scope ytd-player')[0]!=="undefined"
 ){
+
 
 
 elc('html5-video-container')[0].parentElement.style.backgroundColor='#ffffff';
@@ -145,7 +165,7 @@ togglePanZoomMode();
 
 
 function togglePanZoomMode(){
-if(!divPanZoom.panzooming){ 
+if(divPanZoom.getAttribute('panzooming')=='false'){ 
 if(!isFullScreen()){requestFullScreen();}
 enterPanZoomMode();
 }else{
@@ -162,10 +182,11 @@ function onWindowResize(){
 if(el('panzoom')!==null
 &&el('panzoom')!=="undefined"){
 
-if(el('panzoom').panzooming&&!isFullScreen()){ 
+if(el('panzoom').getAttribute('panzooming')=='true'&&!isFullScreen()){ 
 el('panzoom').style.display='none';
+hydeShow();
 
-}else if(el('panzoom').panzooming&&isFullScreen()){
+}else if(el('panzoom').getAttribute('panzooming')=='true'&&isFullScreen()){
 enterPanZoomMode();
 }
 
@@ -180,9 +201,7 @@ zoomW=w,zoomH=h, oldZoomW=zoomW,oldZoomH=zoomH;
 }
 
 function enterPanZoomMode(){
-//elc('video-stream html5-main-video')[0].play();
-el('togControlId').firstChild.nodeValue="Exit PanZoom Mode";
-el('panzoom').panzooming=true;
+el('panzoom').setAttribute('panzooming','true');
 el('panzoom').style.display='block';
 el('panzoom').style.left='0px';
 el('panzoom').style.top='0px';
@@ -190,25 +209,14 @@ el('panzoom').style.width=screen.width+'px';
 el('panzoom').style.height=screen.height+'px';
 resetZoomDefault();
 
-/*
-from the excellent hyde chrome extension, which you can get here:
-https://chrome.google.com/webstore/detail/hyde-%E2%80%94-hide-the-youtube-v/pmkpddhfbiojipiehnejbjkgdgdpkdpb?hl=en
-and here is the website: https://hydecontrols.com
-// hide the elements that are on the YouTube video player using CSS
-*/
-elc('ytp-chrome-top')[0].style.visibility = 'hidden';
-elc('ytp-chrome-controls')[0].style.visibility = 'hidden';
-elc('ytp-gradient-top')[0].style.visibility = 'hidden';
-elc('ytp-gradient-bottom')[0].style.visibility = 'hidden';
-elc('ytp-progress-bar')[0].style.visibility = 'hidden';
-elc('ytp-progress-bar-container')[0].style.visibility = 'hidden';
+hydeHide();
+
 }// end enter pan zoom mode
 
 
 function exitPanZoomMode(){
 
-el('togControlId').firstChild.nodeValue="Enter PanZoom Mode";
-el('panzoom').panzooming=false;
+el('panzoom').setAttribute('panzooming','false');
 el('panzoom').style.display='none';
 
 var elem=document.querySelector('.style-scope ytd-player');
@@ -222,18 +230,9 @@ yplayer.style.top=window.getComputedStyle(el("player-container")).top;
 yplayer.style.width=window.getComputedStyle(el("player-container")).width;
 yplayer.style.height=window.getComputedStyle(el("player-container")).height
 
-/*
-from the excellent hyde chrome extension, which you can get here:
-https://chrome.google.com/webstore/detail/hyde-%E2%80%94-hide-the-youtube-v/pmkpddhfbiojipiehnejbjkgdgdpkdpb?hl=en
-and here is the website: https://hydecontrols.com
-// show the elements that are on the YouTube video player using CSS
-*/
-elc('ytp-chrome-top')[0].style.visibility = 'visible';
-elc('ytp-chrome-controls')[0].style.visibility = 'visible';
-elc('ytp-gradient-top')[0].style.visibility = 'visible';
-elc('ytp-gradient-bottom')[0].style.visibility = 'visible';
-elc('ytp-progress-bar')[0].style.visibility = 'visible';
-elc('ytp-progress-bar-container')[0].style.visibility = 'visible';
+
+hydeShow();
+
 
 }//end exit pan zoom mode
 
